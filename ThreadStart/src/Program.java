@@ -67,12 +67,16 @@ public class Program {
 				System.out.printf("%s : %d\n", Thread.currentThread().getName(), i);
 			}			
 		});
-
+		
+		t0.setPriority(Thread.MAX_PRIORITY);
 		t0.start();
 		t1.start();
 		t2.start();
 		t3.start();
 		System.out.println(Thread.currentThread().getState());
+		t4.setDaemon(true);
+		t5.setDaemon(true);
+		t6.setDaemon(true);
 		t4.start();
 		t5.start();
 		t6.start();
