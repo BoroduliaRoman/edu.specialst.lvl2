@@ -1,3 +1,5 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 class Sync2 {
 	private volatile int counter = 0;
 	
@@ -21,8 +23,12 @@ public class Program {
 		
 		Sync2 s = new Sync2();
 		
+		AtomicInteger c = new AtomicInteger();
+		
 		Thread t0 = new Thread(() -> {
 			for (int i = 1; i <= 10_000; i++) {
+				c.incrementAndGet();
+				
 //				System.out.printf("%s : %d\n", Thread.currentThread().getName(), i);
 //				counter++;
 				/*synchronized(s)*/ {
@@ -34,6 +40,8 @@ public class Program {
 		
 		Thread t1 = new Thread(() -> {
 			for (int i = 1; i <= 10_000; i++) {
+				c.incrementAndGet();
+				
 //				System.out.printf("%s : %d\n", Thread.currentThread().getName(), i);
 				/*synchronized (s)*/ {
 //					s.counter++;
@@ -49,5 +57,6 @@ public class Program {
 		t1.join();
 		
 		System.out.println(s.getCounter());
+		System.out.println(c.get());
 	}
 }
